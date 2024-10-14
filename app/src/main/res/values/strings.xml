@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Kisan_Buddy</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">password</string>
+    <string name="Register">register</string>
+</resources>

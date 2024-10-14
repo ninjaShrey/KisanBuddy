@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "563715453003",
+    "project_id": "kisan-login-register-9cf8c",
+    "storage_bucket": "kisan-login-register-9cf8c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563715453003:android:9fb6cb49a1167140b25dce",
+        "android_client_info": {
+          "package_name": "com.example.kisan_buddy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgLi4fW9rzSRC-nbCN00b0xrbbVwau72s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
