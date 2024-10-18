@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="backgroundColor">#F4F4F9</color>
+    <color name="inputTextColor">#333333</color>
+    <color name="hintTextColor">#aaaaaa</color>
+    <color name="textPrimary">#000000</color>
+    <color name="textSecondary">#666666</color>
+    <color name="inputBorderColor">#DDDDDD</color>
+    <color name="lightGreen">#B2FFB2</color>
+    <color name="buttonColor">#4CAF50</color> <!-- Normal Green -->
+    <color name="buttonColorPressed">#388E3C</color> <!-- Darker Green -->
+    <color name="buttonColorDisabled">#A5D6A7</color> <!-- Light Green for Disabled -->
+
+    <color name="buttonTextColor">#FFFFFF</color> <!-- White Text Color for Button -->
 </resources>
