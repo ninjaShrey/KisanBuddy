@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Crop Name Field -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crop Name"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/cropNameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter crop name"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Crop Quantity Field -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crop Quantity (kg)"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/cropQuantityEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter crop quantity"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Crop Weight Field -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Crop Weight (kg)"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/cropWeightEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter crop weight"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/saveProductButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Crop"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

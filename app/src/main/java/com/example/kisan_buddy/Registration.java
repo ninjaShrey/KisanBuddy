@@ -10,9 +10,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Registration extends AppCompatActivity {
 
@@ -62,17 +63,55 @@ public class Registration extends AppCompatActivity {
         String role = selectedRadioButton != null ? selectedRadioButton.getText().toString() : "Unknown";
 
         // Use Firebase Auth to register the user
-        // Example:
-         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-             .addOnCompleteListener(this, task -> {
-                 if (task.isSuccessful()) {
-                     // Registration successful, handle success
-                     Toast.makeText(this, "Registered successfully as " + role, Toast.LENGTH_SHORT).show();
-                     // Redirect to dashboard
-                 } else {
-                     // Handle registration failure
-                     Toast.makeText(this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                 }
-             });
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Registration successful
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String userId = user != null ? user.getUid() : "";
+
+                        // Store email and user type in Firestore
+                        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+                        User userObj = new User(email, role);
+
+                        // Add user data to Firestore
+                        firestore.collection("users").document(userId)
+                                .set(userObj)
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(this, "Registered successfully as " + role, Toast.LENGTH_SHORT).show();
+                                    // Redirect to login page
+                                    Intent intent = new Intent(Registration.this, Login.class);
+                                    startActivity(intent);
+                                    finish();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(this, "Error storing user data in Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+                    } else {
+                        // Handle registration failure
+                        Toast.makeText(this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    // User data model class
+    public static class User {
+        private String email;
+        private String userType;
+
+        public User() { }
+
+        public User(String email, String userType) {
+            this.email = email;
+            this.userType = userType;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getUserType() {
+            return userType;
+        }
     }
 }

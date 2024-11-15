@@ -1,24 +1,26 @@
 package com.example.kisan_buddy;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Login extends AppCompatActivity {
 
-    private EditText emailEditText;
-    private EditText passwordEditText;
+    private EditText emailEditText, passwordEditText;
     private Button loginButton;
-    private Button registerButton;
+
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,40 +30,71 @@ public class Login extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
-        registerButton = findViewById(R.id.registerButton);
-        mAuth = FirebaseAuth.getInstance();
 
-        loginButton.setOnClickListener(v -> loginUser());
-        registerButton.setOnClickListener(v -> openRegistration());
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginUser();
+            }
+        });
     }
 
     private void loginUser() {
-        String email = emailEditText.getText().toString().trim();
-        String password = passwordEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Please enter email and password.", Toast.LENGTH_SHORT).show();
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Authenticate with Firebase
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Sign in success, navigate to Dashboard
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Login.this, activity_dashboard.class);
-                        startActivity(intent);
-                        finish();
+                        // Authentication successful, fetch user type from Firestore
+                        checkUserTypeAndRedirect();
                     } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(Login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        // Handle login failure
+                        Toast.makeText(this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    private void openRegistration() {
-        Intent intent = new Intent(Login.this, Registration.class);
-        startActivity(intent);
+    private void checkUserTypeAndRedirect() {
+        // Get current user ID
+        String userId = mAuth.getCurrentUser().getUid();
+
+        // Fetch user type from Firestore
+        DocumentReference userRef = db.collection("users").document(userId);
+        userRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                String userType = task.getResult().getString("userType");
+
+                // Redirect based on user type
+                if (userType != null) {
+                    if (userType.equals("Producer")) {
+                        // Redirect to Producer Dashboard
+                        Intent producerIntent = new Intent(Login.this, ProducerDashboard.class);
+                        startActivity(producerIntent);
+                        finish();
+                    } else if (userType.equals("Consumer")) {
+                        // Redirect to Consumer Dashboard
+                        Intent consumerIntent = new Intent(Login.this, ConsumerDashboard.class);
+                        startActivity(consumerIntent);
+                        finish();
+                    } else {
+                        Toast.makeText(Login.this, "Unknown user type", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(Login.this, "User type not found", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(Login.this, "Error fetching user data", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

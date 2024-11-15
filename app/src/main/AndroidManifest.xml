@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,37 +15,43 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kisan_Buddy"
         tools:targetApi="31">
-
-        <!-- Splash Activity: this will be the launcher activity -->
+        <activity
+            android:name=".ConsumerDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".ProducerDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".consumer_activity_dashboard"
+            android:exported="false" />
+        <activity
+            android:name=".SellActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" /> <!-- Splash Activity: this will be the launcher activity -->
         <activity
             android:name=".SplashActivity"
-            android:exported="true">  <!-- Set exported="true" to allow launching -->
+            android:exported="true"> <!-- Set exported="true" to allow launching -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Login Activity -->
+        </activity> <!-- Login Activity -->
         <activity
             android:name=".Login"
             android:exported="true" /> <!-- Exported should be true for accessing externally -->
-
         <!-- Registration Activity -->
         <activity
             android:name=".Registration"
-            android:exported="false" />
-
-        <!-- Dashboard Activity -->
+            android:exported="false" /> <!-- Dashboard Activity -->
         <activity
             android:name=".activity_dashboard"
-            android:exported="false" />
-
-        <!-- Main Activity -->
+            android:exported="false" /> <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>
