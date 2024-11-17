@@ -7,6 +7,11 @@ public class Crop {
     private String cropWeight;
     private String producerEmail;
 
+
+    // Public no-argument constructor
+    public Crop() {
+        // Required for Firestore deserialization
+    }
     public Crop(String cropName, String cropQuantity, String cropWeight, String producerEmail) {
         this.cropName = cropName;
         this.cropQuantity = cropQuantity;

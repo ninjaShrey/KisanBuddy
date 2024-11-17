@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,39 +61,42 @@ public class Registration extends AppCompatActivity {
             return;
         }
 
-        String role = selectedRadioButton != null ? selectedRadioButton.getText().toString() : "Unknown";
+        if (selectedRadioButton == null) {
+            Toast.makeText(this, "Please select a role", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Use Firebase Auth to register the user
+        String role = selectedRadioButton.getText().toString();
+
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // Registration successful
+                        Log.d("Registration", "Firebase Auth Success");
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         String userId = user != null ? user.getUid() : "";
 
-                        // Store email and user type in Firestore
                         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
                         User userObj = new User(email, role);
 
-                        // Add user data to Firestore
                         firestore.collection("users").document(userId)
                                 .set(userObj)
                                 .addOnSuccessListener(aVoid -> {
                                     Toast.makeText(this, "Registered successfully as " + role, Toast.LENGTH_SHORT).show();
-                                    // Redirect to login page
                                     Intent intent = new Intent(Registration.this, Login.class);
                                     startActivity(intent);
                                     finish();
                                 })
                                 .addOnFailureListener(e -> {
-                                    Toast.makeText(this, "Error storing user data in Firestore: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Log.e("Registration", "Firestore Error: " + e.getMessage());
+                                    Toast.makeText(this, "Error storing user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 });
                     } else {
-                        // Handle registration failure
+                        Log.e("Registration", "Firebase Auth Error: " + task.getException().getMessage());
                         Toast.makeText(this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
 
     // User data model class
     public static class User {
