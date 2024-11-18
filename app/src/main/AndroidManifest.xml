@@ -16,20 +16,22 @@
         android:theme="@style/Theme.Kisan_Buddy"
         tools:targetApi="31">
         <activity
-            android:name=".ConsumerDashboard"
+            android:name=".BaseActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".ConsumerDashboard"
+            android:exported="true" />
         <activity
             android:name=".ProducerDashboard"
             android:exported="false" />
-        <activity
-            android:name=".consumer_activity_dashboard"
-            android:exported="false" />
+
         <activity
             android:name=".SellActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ProfileActivity"
-            android:exported="false" /> <!-- Splash Activity: this will be the launcher activity -->
+            android:exported="true" /> <!-- Splash Activity: this will be the launcher activity -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"> <!-- Set exported="true" to allow launching -->
@@ -46,9 +48,7 @@
         <activity
             android:name=".Registration"
             android:exported="false" /> <!-- Dashboard Activity -->
-        <activity
-            android:name=".activity_dashboard"
-            android:exported="false" /> <!-- Main Activity -->
+
         <activity
             android:name=".MainActivity"
             android:exported="false" />

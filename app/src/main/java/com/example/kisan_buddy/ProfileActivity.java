@@ -1,6 +1,5 @@
 package com.example.kisan_buddy;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,6 +7,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,8 +21,6 @@ public class ProfileActivity extends AppCompatActivity {
     private Button saveButton;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-
-    private boolean isEditMode = false;  // Flag to check if the user is editing the profile
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Set up save button
         saveButton.setOnClickListener(v -> saveUserData());
+        // Initialize BottomNavigationView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        BottomNavigationHelper.setupBottomNavigationView(this, bottomNavigationView);
     }
 
     private void fetchUserData() {
@@ -105,13 +108,16 @@ public class ProfileActivity extends AppCompatActivity {
         userRef.update("name", name, "age", age, "gender", gender, "aadhar", aadhar)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // Successfully saved, update UI and disable editing
-                        Toast.makeText(this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-                        setEditable(false);  // Disable editing after saving
+                        Toast.makeText(ProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                        setEditable(false);
                     } else {
-                        // Handle failure to save data
-                        Toast.makeText(this, "Failed to save profile data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "Error updating profile", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+//    @Override
+//    protected int getBottomNavigationMenuItemId() {
+//        return R.id.nav_profile; // Highlight Profile when in ProfileActivity
+//    }
 }

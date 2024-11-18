@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,26 +34,10 @@ public class ProducerDashboard extends AppCompatActivity {
 
         firestore = FirebaseFirestore.getInstance();
 
-        viewProfileButton = findViewById(R.id.profileButton);
-        sellButton = findViewById(R.id.sellButton);
 
-        // Navigate to Profile Activity
-        viewProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProducerDashboard.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
 
-        // Navigate to Sell Activity
-        sellButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProducerDashboard.this, SellActivity.class);
-                startActivity(intent);
-            }
-        });
+
+
 
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
@@ -64,6 +49,10 @@ public class ProducerDashboard extends AppCompatActivity {
 
         // Fetch crops for the logged-in producer
         fetchCropsForProducer();
+
+        // Initialize BottomNavigationView using the helper method
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        BottomNavigationHelper.setupBottomNavigationView(this, bottomNavigationView);
     }
 
     private void fetchCropsForProducer() {

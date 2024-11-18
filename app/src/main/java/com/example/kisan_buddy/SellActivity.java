@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -21,12 +22,18 @@ public class SellActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sell);
 
+        // Initialize views
         cropNameEditText = findViewById(R.id.cropNameEditText);
         cropQuantityEditText = findViewById(R.id.cropQuantityEditText);
         cropWeightEditText = findViewById(R.id.cropWeightEditText);
         saveProductButton = findViewById(R.id.saveProductButton);
 
+        // Initialize Firestore
         db = FirebaseFirestore.getInstance();
+
+        // Initialize BottomNavigationView and set up the navigation helper
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        BottomNavigationHelper.setupBottomNavigationView(this, bottomNavigationView);
 
         // On Save button click, save the crop details to Firestore
         saveProductButton.setOnClickListener(v -> saveCropDetails());
