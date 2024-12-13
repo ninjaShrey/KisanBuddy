@@ -13,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SellActivity extends AppCompatActivity {
 
-    private EditText cropNameEditText, cropQuantityEditText, cropWeightEditText;
+    private EditText cropNameEditText, cropQuantityEditText, cropWeightEditText, pricePerKgEditText;
     private Button saveProductButton;
     private FirebaseFirestore db;
 
@@ -26,6 +26,7 @@ public class SellActivity extends AppCompatActivity {
         cropNameEditText = findViewById(R.id.cropNameEditText);
         cropQuantityEditText = findViewById(R.id.cropQuantityEditText);
         cropWeightEditText = findViewById(R.id.cropWeightEditText);
+        pricePerKgEditText = findViewById(R.id.pricePerKgEditText);
         saveProductButton = findViewById(R.id.saveProductButton);
 
         // Initialize Firestore
@@ -43,8 +44,9 @@ public class SellActivity extends AppCompatActivity {
         String cropName = cropNameEditText.getText().toString();
         String cropQuantity = cropQuantityEditText.getText().toString();
         String cropWeight = cropWeightEditText.getText().toString();
+        String pricePerKg = pricePerKgEditText.getText().toString();
 
-        if (cropName.isEmpty() || cropQuantity.isEmpty() || cropWeight.isEmpty()) {
+        if (cropName.isEmpty() || cropQuantity.isEmpty() || cropWeight.isEmpty() || pricePerKg.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -54,7 +56,7 @@ public class SellActivity extends AppCompatActivity {
 
         if (producerEmail != null) {
             // Save crop data to Firestore with a reference to the producer's email
-            Crop crop = new Crop(cropName, cropQuantity, cropWeight, producerEmail);
+            Crop crop = new Crop(cropName, cropQuantity, cropWeight, pricePerKg, producerEmail);
 
             db.collection("crops")
                     .add(crop)

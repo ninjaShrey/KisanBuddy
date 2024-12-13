@@ -7,6 +7,7 @@
     tools:context=".ConsumerDashboard"
     android:background="#D3C8B8">
 
+    <!-- Top Bar -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -17,23 +18,37 @@
         android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Back Button -->
         <ImageView
             android:id="@+id/backImageView"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/back"
             android:scaleType="fitCenter"
             android:layout_marginEnd="8dp" />
 
+        <!-- Title -->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Consumer Dashboard"
             android:textColor="@color/buttonTextColor"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <!-- Search View -->
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="true"
+            android:queryHint="Search crops"
+
+            android:layout_marginEnd="8dp" />
     </LinearLayout>
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
@@ -45,6 +60,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Bottom Navigation View -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"

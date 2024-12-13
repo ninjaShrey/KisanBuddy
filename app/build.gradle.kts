@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.kisan_buddy"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 34  // Use the latest targetSdk
         versionCode = 1
         versionName = "1.0"
