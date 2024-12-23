@@ -33,4 +33,14 @@
         app:layout_constraintTop_toBottomOf="@id/cropPriceTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Bid Count TextView -->
+    <TextView
+        android:id="@+id/bidCountTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Bids: 5"
+        app:layout_constraintTop_toBottomOf="@id/producerNameTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

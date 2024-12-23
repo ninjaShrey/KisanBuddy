@@ -1,30 +1,26 @@
 package com.example.kisan_buddy;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProducerDashboard extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private CropAdapter cropAdapter;
     private List<Crop> cropList;
-    private Button viewProfileButton;
-    private Button sellButton;
-
     private FirebaseFirestore firestore;
 
     @Override
@@ -33,11 +29,6 @@ public class ProducerDashboard extends AppCompatActivity {
         setContentView(R.layout.activity_producer_dashboard);
 
         firestore = FirebaseFirestore.getInstance();
-
-
-
-
-
 
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
@@ -50,7 +41,14 @@ public class ProducerDashboard extends AppCompatActivity {
         // Fetch crops for the logged-in producer
         fetchCropsForProducer();
 
-        // Initialize BottomNavigationView using the helper method
+        // Set up item click listener
+        cropAdapter.setOnItemClickListener(crop -> {
+            Intent intent = new Intent(ProducerDashboard.this, CustomerListActivity.class);
+            intent.putExtra("cropDocId", crop.getId()); // Pass document ID of the selected crop
+            startActivity(intent);
+        });
+
+        // Initialize BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         BottomNavigationHelper.setupBottomNavigationView(this, bottomNavigationView);
     }
@@ -68,9 +66,10 @@ public class ProducerDashboard extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        cropList.clear(); // Clear the list before adding new data
+                        cropList.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Crop crop = document.toObject(Crop.class);
+                            crop.setId(document.getId()); // Set the document ID
                             cropList.add(crop);
                         }
                         cropAdapter.notifyDataSetChanged();

@@ -14,6 +14,7 @@ import java.util.List;
 public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder> {
 
     private List<Crop> cropList;
+    private OnItemClickListener onItemClickListener; // Listener for item clicks
 
     public CropAdapter(List<Crop> cropList) {
         this.cropList = cropList;
@@ -32,6 +33,13 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
         holder.cropNameTextView.setText(crop.getCropName());
         holder.cropPriceTextView.setText("Price: $" + crop.getPrice());
         holder.producerNameTextView.setText("Seller: " + crop.getProducerEmail());
+        holder.bidCountTextView.setText("Bids: " + crop.getBidCount());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(crop);
+            }
+        });
     }
 
     @Override
@@ -40,23 +48,24 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
     }
 
     public static class CropViewHolder extends RecyclerView.ViewHolder {
-        TextView cropNameTextView, cropPriceTextView, producerNameTextView;
+        TextView cropNameTextView, cropPriceTextView, producerNameTextView, bidCountTextView;
 
         public CropViewHolder(@NonNull View itemView) {
             super(itemView);
             cropNameTextView = itemView.findViewById(R.id.cropNameTextView);
             cropPriceTextView = itemView.findViewById(R.id.cropPriceTextView);
             producerNameTextView = itemView.findViewById(R.id.producerNameTextView);
+            bidCountTextView = itemView.findViewById(R.id.bidCountTextView);
         }
     }
 
-    // New method to update the entire crop list
+    // Method to update the entire crop list
     public void updateList(List<Crop> newCropList) {
         this.cropList = new ArrayList<>(newCropList); // Create a new list to avoid modifying the original reference
         notifyDataSetChanged();
     }
 
-    // New method to filter crops based on a condition
+    // Method to filter crops based on a condition
     public void filterList(String query) {
         List<Crop> filteredList = new ArrayList<>();
         for (Crop crop : cropList) {
@@ -67,7 +76,7 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
         updateList(filteredList);
     }
 
-    // New method to sort crops by price
+    // Method to sort crops by price
     public void sortByPrice() {
         List<Crop> sortedList = new ArrayList<>(cropList);
         sortedList.sort((crop1, crop2) -> {
@@ -76,5 +85,15 @@ public class CropAdapter extends RecyclerView.Adapter<CropAdapter.CropViewHolder
             return Double.compare(price1, price2);
         });
         updateList(sortedList); // Update the adapter's list with the sorted data
+    }
+
+    // Interface for item click listener
+    public interface OnItemClickListener {
+        void onItemClick(Crop crop);
+    }
+
+    // Method to set the item click listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 }

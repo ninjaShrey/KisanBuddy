@@ -1,5 +1,6 @@
 package com.example.kisan_buddy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -45,7 +46,7 @@ public class ConsumerDashboard extends AppCompatActivity {
         cropAdapter = new CropAdapter(cropList);
         recyclerView.setAdapter(cropAdapter);
 
-        // Fetch all crops
+        // Fetch all crops using documentId
         fetchAllCrops();
 
         // Set up SearchView
@@ -71,7 +72,11 @@ public class ConsumerDashboard extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         cropList.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                            String documentId = document.getId(); // Firestore document ID
                             Crop crop = document.toObject(Crop.class);
+                            crop.setId(documentId); // Set the document ID as id
+                            int bidCount = getBidCountForCrop(documentId);
+                            crop.setBidCount(bidCount); // Set the bid count
                             cropList.add(crop);
                         }
                         cropAdapter.updateList(cropList);
@@ -79,6 +84,13 @@ public class ConsumerDashboard extends AppCompatActivity {
                         Toast.makeText(this, "Failed to fetch crops: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        cropAdapter.setOnItemClickListener(crop -> {
+            // Navigate to BiddingActivity with documentId
+            Intent intent = new Intent(ConsumerDashboard.this, BiddingActivity.class);
+            intent.putExtra("documentId", crop.getId());
+            startActivity(intent);
+        });
     }
 
     private void filterAndSortCrops(String query) {
@@ -107,5 +119,29 @@ public class ConsumerDashboard extends AppCompatActivity {
         cropAdapter.updateList(filteredList);
     }
 
+    private int getBidCountForCrop(String documentId) {
+        final int[] bidCount = {0};
+        firestore.collection("crops")
+                .document(documentId)
+                .collection("bidders")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        bidCount[0] = task.getResult().size();
+                        // Update the Crop object with bid count
+                        updateCropBidCount(documentId, bidCount[0]);
+                    }
+                });
+        return bidCount[0];
+    }
 
+    private void updateCropBidCount(String documentId, int bidCount) {
+        for (Crop crop : cropList) {
+            if (crop.getId().equals(documentId)) {
+                crop.setBidCount(bidCount); // Update the crop object with bid count
+                break;
+            }
+        }
+        cropAdapter.updateList(cropList); // Notify adapter of the update
+    }
 }
