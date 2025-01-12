@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D3C8B8"
+    tools:context=".ExpenseCalculatorActivity">
+
+    <!-- Top Bar with Back Button -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:background="@color/buttonColor"
+        android:padding="8dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backImageView"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/back"
+            android:scaleType="centerInside"
+            android:contentDescription="Back Icon"
+            android:layout_marginEnd="8dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expenses and Profit"
+            android:textColor="@color/buttonTextColor"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Wrapper for Centering Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_marginTop="64dp"> <!-- Added margin to prevent overlap with top bar -->
+
+        <!-- Title Text -->
+        <TextView
+            android:id="@+id/expenseTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expense Calculator"
+            android:textSize="20sp"
+            android:textColor="@color/textPrimary"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"
+            android:gravity="center" />
+
+        <!-- Customer Email -->
+        <TextView
+            android:id="@+id/customerEmailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Customer Email: "
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp"
+            android:gravity="start" />
+
+        <!-- Producer Email -->
+        <TextView
+            android:id="@+id/producerEmailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Producer Email: "
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp"
+            android:gravity="start" />
+
+        <!-- Crop Quantity -->
+        <TextView
+            android:id="@+id/cropQuantityTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crop Quantity (kg): "
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp"
+            android:gravity="start" />
+
+        <!-- Crop Weight -->
+        <TextView
+            android:id="@+id/cropWeightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crop Weight (kg): "
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp"
+            android:gravity="start" />
+
+        <!-- Transportation Cost -->
+        <TextView
+            android:id="@+id/transportationCostTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transportation Cost: "
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp"
+            android:gravity="start" />
+
+        <!-- Additional Expenses -->
+        <TextView
+            android:id="@+id/additionalExpensesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Additional Expenses: "
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp"
+            android:gravity="start" />
+
+        <!-- Total Expenses -->
+        <TextView
+            android:id="@+id/totalExpensesTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Expenses: "
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp"
+            android:gravity="start" />
+
+        <!-- Bid Amount -->
+        <TextView
+            android:id="@+id/bidAmountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bid Amount: "
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp"
+            android:gravity="start" />
+
+        <!-- Profit -->
+        <TextView
+            android:id="@+id/profitTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profit: "
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp"
+            android:gravity="start" />
+
+        <!-- Best Vehicle Suggestion -->
+        <TextView
+            android:id="@+id/bestVehicleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Best Vehicle: "
+            android:textSize="16sp"
+            android:textColor="@color/textPrimary"
+            android:layout_marginBottom="8dp"
+            android:gravity="start" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

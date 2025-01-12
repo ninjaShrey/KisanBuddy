@@ -5,48 +5,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#B0C7C8A4"
     tools:context=".MapViewActivity">
 
+    <!-- Title Text -->
+    <TextView
+        android:id="@+id/mapViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Map View and Details"
+        android:textSize="20sp"
+        android:textColor="@color/textPrimary"
+        android:layout_marginBottom="16dp"
+        android:textStyle="bold"/>
+
+    <!-- Customer Email -->
     <TextView
         android:id="@+id/customerEmailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Customer Email: " />
+        android:text="Customer Email: "
+        android:textSize="16sp"
+        android:textColor="@color/textPrimary"
+        android:layout_marginBottom="8dp"/>
 
+    <!-- Customer Coordinates -->
     <TextView
         android:id="@+id/customerCoordinatesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Customer Coordinates: " />
+        android:text="Customer Coordinates: "
+        android:textSize="16sp"
+        android:textColor="@color/textPrimary"
+        android:layout_marginBottom="8dp"/>
 
+    <!-- Producer Email -->
     <TextView
         android:id="@+id/producerEmailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Producer Email: " />
+        android:text="Producer Email: "
+        android:textSize="16sp"
+        android:textColor="@color/textPrimary"
+        android:layout_marginBottom="8dp"/>
 
+    <!-- Producer Coordinates -->
     <TextView
         android:id="@+id/producerCoordinatesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Producer Coordinates: " />
+        android:text="Producer Coordinates: "
+        android:textSize="16sp"
+        android:textColor="@color/textPrimary"
+        android:layout_marginBottom="8dp"/>
 
+    <!-- Nearest Market -->
     <TextView
         android:id="@+id/nearestMarketTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nearest Market: " />
+        android:text="Nearest Market: "
+        android:textSize="16sp"
+        android:textColor="@color/textPrimary"
+        android:layout_marginBottom="16dp"/>
 
+    <!-- MapView -->
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        app:mapType="normal" />
+        app:mapType="normal"
+        android:layout_marginBottom="16dp" />
 
-    <TextView
-        android:id="@+id/expenditureTextView"
+    <!-- Button to navigate to Expense Calculator -->
+    <Button
+        android:id="@+id/navigateToExpenseButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="Go to Expense Calculator"
+        android:textSize="18sp"
+        android:textColor="@color/buttonTextColor"
+        android:background="@color/buttonColor"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="onNavigateToExpenseClick"/>
 
 </LinearLayout>

@@ -11,6 +11,7 @@ public class Customer {
     private String cropQuantity;
     private String cropWeight;
     private String price;
+    private String documentId;
     private GeoPoint location;  // Adding location field
 
     // No-argument constructor for Firestore deserialization
@@ -27,7 +28,9 @@ public class Customer {
     public void setBidderName(String bidderName) {
         this.bidderName = bidderName;
     }
-
+    public void setBidderDocId(String documentId) {
+        this.documentId = documentId;
+    }
     public String getBidderEmail() {
         return bidderEmail;
     }
@@ -87,5 +90,8 @@ public class Customer {
 
     public String getEmail() {
         return bidderEmail;  // Assuming 'Email' refers to 'bidderEmail'
+    }
+
+    public String getBidderDocId() { return documentId;
     }
 }

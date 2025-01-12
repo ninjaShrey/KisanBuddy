@@ -6,11 +6,13 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="8dp"
     android:padding="16dp"
+    android:background="#D3C8B8"
     android:layout_margin="8dp">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:background="#B0D3C8B8"
         android:layout_height="wrap_content">
 
         <TextView

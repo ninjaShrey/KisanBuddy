@@ -23,7 +23,8 @@ public class CustomerListActivity extends AppCompatActivity {
     private String producerEmail;
     private double producerLatitude;
     private double producerLongitude;
-
+    private String bidderDocId;
+    private String cropDocId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class CustomerListActivity extends AppCompatActivity {
         recyclerView.setAdapter(customerAdapter);
 
         // Fetch customer details based on cropDocId passed from ProducerDashboard
-        String cropDocId = getIntent().getStringExtra("cropDocId");
+        cropDocId = getIntent().getStringExtra("cropDocId");
         fetchCustomersForCrop(cropDocId);
 
         customerAdapter.setOnItemClickListener(customer -> showSettleBidDialog(customer));
@@ -80,6 +81,7 @@ public class CustomerListActivity extends AppCompatActivity {
                         customerList.clear();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Customer customer = document.toObject(Customer.class);
+                            customer.setBidderDocId(document.getId());
                             customerList.add(customer);
                         }
                         customerAdapter.notifyDataSetChanged();
@@ -97,6 +99,7 @@ public class CustomerListActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", (dialog, which) -> {
                     // Save customer email
                     String customerEmail = customer.getEmail();
+                    bidderDocId = customer.getBidderDocId();
 
                     // Fetch location coordinates
                     fetchCustomerLocation(customerEmail);
@@ -127,7 +130,8 @@ public class CustomerListActivity extends AppCompatActivity {
                             intent.putExtra("producerEmail", producerEmail);
                             intent.putExtra("producerLatitude", producerLatitude);
                             intent.putExtra("producerLongitude", producerLongitude);
-
+                            intent.putExtra("cropDocId",cropDocId);
+                            intent.putExtra("bidderDocId",bidderDocId);
                             startActivity(intent);
                         } else {
                             Toast.makeText(this, "Location coordinates not found.", Toast.LENGTH_SHORT).show();
